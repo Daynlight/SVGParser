@@ -9,3 +9,13 @@ Czego można się nauczyć: Obsługa i walidacja nazwanych parametrów, definiow
 
 
 
+## TOC
+- [SVD Parser](#svd-parser)
+  - [Język Opisu Prostych Scen 2D](#język-opisu-prostych-scen-2d)
+  - [TOC](#toc)
+  - [Prerequisites](#prerequisites)
+
+
+
+## Prerequisites
+- typeguard
