@@ -1,4 +1,4 @@
-from typeguard import typechecked
+from static_typing import typechecked
 from pathlib import Path
 import sys
 

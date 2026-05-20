@@ -1,4 +1,4 @@
-from typeguard import typechecked
+from static_typing import typechecked
 from typing import Callable
 import arcade
 

@@ -1,4 +1,4 @@
-from typeguard import typechecked
+from static_typing import typechecked
 from enum import IntFlag, auto 
 import sys
 
