@@ -154,9 +154,10 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - [x] Description for repo (Daniel).
 - [x] Unit Tests structure (Daniel).
 - [x] Tests workflow (Daniel).
+- [x] Stage branch for testing (Daniel).
+- [ ] Deployment workflow (Daniel).
 - [ ] Community standards for repo (Daniel).
 - [ ] Tickets (Daniel).
-- [ ] Stage branch for testing (Daniel).
 </details>
 
 <details>
