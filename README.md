@@ -1,20 +1,22 @@
-# SVD Parser
-
+# SVG Parser
+SVG Parser is simple **python app** for **parsing** custom file format and showing it via ```arcade```. Inspired by ```svg``` and ```c++``` languages.
 
 
 ## Język Opisu Prostych Scen 2D
-Opis: Stworzenie prostego, własnego języka do opisu wektorowych obiektów graficznych na płaszczyźnie.
-Zakres: Definiowanie komend typu CIRCLE x=10, y=20, r=5, color=red lub RECT w=100, h=50. Parsowanie do struktur reprezentujących kształty. Opcjonalnie: generowanie rysunku (np. z użyciem biblioteki turtle lub zapis do SVG).
-Czego można się nauczyć: Obsługa i walidacja nazwanych parametrów, definiowanie struktury komend.
+**Opis**: Stworzenie prostego, własnego języka do opisu wektorowych obiektów graficznych na płaszczyźnie.  
+**Zakres**: Definiowanie komend typu ```CIRCLE x=10, y=20, r=5, color=red lub RECT w=100, h=50```. Parsowanie do struktur reprezentujących kształty.  
+**Opcjonalnie**: generowanie rysunku (np. z użyciem biblioteki turtle lub zapis do SVG).  
+**Czego można się nauczyć**: Obsługa i walidacja nazwanych parametrów, definiowanie struktury komend.
 
 
 
 ## TOC
-- [SVD Parser](#svd-parser)
+- [SVG Parser](#svg-parser)
   - [Język Opisu Prostych Scen 2D](#język-opisu-prostych-scen-2d)
   - [TOC](#toc)
   - [Installation](#installation)
   - [Usage](#usage)
+  - [Building to executable](#building-to-executable)
   - [Language Syntaxes](#language-syntaxes)
     - [Supported Objects](#supported-objects)
   - [Architecture](#architecture)
@@ -22,7 +24,7 @@ Czego można się nauczyć: Obsługa i walidacja nazwanych parametrów, definiow
     - [Parsing file](#parsing-file)
     - [Integrity](#integrity)
     - [Implementation](#implementation)
-  - [Prerequisites](#prerequisites)
+  - [Prerequisites requirements](#prerequisites-requirements)
   - [Tasks](#tasks)
 
 
@@ -56,6 +58,12 @@ pip install -r requirements.txt
 1. Create your **file.svl** or use one of [**Examples**](/Example)
 2. Run [```main.py```](SVDParser/main.py) with path to **file.svl**.
 
+
+
+## Building to executable
+```bash
+pyinstaller --onefile --windowed SVGParser/main.py
+```
 
 
 ## Language Syntaxes
@@ -97,17 +105,40 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 
 ### Implementation
 1. We use typeguard for hard typing.
-2. We always use strict absolute **PATH** to project.
+2. We use ```from static_typing import typechecked``` to avoid issue with ```pyinstaller```.
+3. We always use strict absolute **PATH** to project.
+4. For ```release``` we build it via ```[PyInstaller](http://pyinstaller.org/en/stable/)```.
 
 
 
-## Prerequisites
-- typeguard
+## Prerequisites [requirements](requirements.txt)
+- **typeguard**: 4.5.2
+- **arcade**: 3.3.3
+- **pyinstaller**: 6.20.0
 
 
 
 ## Tasks
+
+<details open>
+<summary>🌟 Iteration 1 🌟</summary>
+
 - [x] Setup repo (Daniel)
 - [x] Architecture (Daniel)
 - [x] Language design (Martyna)
-- [ ] Basic Classes (Daniel)
+- [x] Basic Renderer with arcade (Daniel)
+- [x] Description for repo (Daniel).
+- [ ] Community standards for repo (Daniel).
+- [ ] Tickets (Daniel).
+- [ ] Stage branch for testing (Daniel).
+- [ ] Unit Tests structure and workflow (Daniel).
+</details>
+
+<details>
+<summary>Iteration 2</summary>
+
+- [ ] App class that stores data and provides functions for ```arcade``` renderer.
+- [ ] Basic parser class with file validation and checking existence.
+- [ ] Inherit Class for other object classes.
+- [ ] Classes for ```Circle```, ```Rect```, ```Oval```.
+</details>
