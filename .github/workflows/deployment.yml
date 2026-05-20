@@ -125,6 +125,8 @@ jobs:
           rm -rf /tmp/app
           mkdir -p /tmp/app
           cp -r ./dist/main /tmp/app/SVGParser
+          cp -r ./LICENSE /tmp/app/LICENSE
+          cp -r ./README.md /tmp/app/README.md
 
       - name: Checkout or create deploy_executable
         run: |
@@ -144,6 +146,8 @@ jobs:
       - name: Add new executable
         run: |
           cp -r /tmp/app/SVGParser . 
+          cp -r /tmp/app/LICENSE . 
+          cp -r /tmp/app/README.md . 
 
       - name: Commit into deploy executable and create tag
         run: |
