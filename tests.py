@@ -7,6 +7,7 @@ from Tests.Unit.flags import FlagsUnitTests
 def main():
   tests: testExcept = testExcept("Tests")
   tests.is_true("FlagsUnitTests", FlagsUnitTests().run())
+  tests.is_true("FlagsUnitTests", False)
   tests.showResult()
 
   if(not tests.allPassed()):
