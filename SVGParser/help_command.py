@@ -1,5 +1,4 @@
 from typeguard import typechecked
-import sys
 
 
 @typechecked
@@ -13,7 +12,8 @@ def printHelp():
 * -d/--debug - turns debug mode
 
 # Requirements
-* typeguard
+* typeguard: 4.5.2
+* arcade: 3.3.3
 
 # Authors
 * Martyna Plenzer

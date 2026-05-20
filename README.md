@@ -22,7 +22,7 @@ Czego można się nauczyć: Obsługa i walidacja nazwanych parametrów, definiow
     - [Parsing file](#parsing-file)
     - [Integrity](#integrity)
     - [Implementation](#implementation)
-  - [Prerequisites](#prerequisites)
+  - [Prerequisites requirements](#prerequisites-requirements)
   - [Tasks](#tasks)
 
 
@@ -101,8 +101,9 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 
 
 
-## Prerequisites
-- typeguard
+## Prerequisites [requirements](requirements.txt)
+- **typeguard**: 4.5.2
+- **arcade**: 3.3.3
 
 
 
