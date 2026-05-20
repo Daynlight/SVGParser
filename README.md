@@ -103,6 +103,7 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - ```Circle(x, y, r);```
 - ```Rect(x, y, w, h);```
 - ```Oval(x, y, a, b);```
+- ```Line(x1, y1, x2, y2, s);```
 
 
 
@@ -144,8 +145,8 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 
 ## Tasks
 
-<details open>
-<summary>🌟 Iteration 1 🌟</summary>
+<details>
+<summary>Iteration 1</summary>
 
 - [x] Setup repo (Daniel)
 - [x] Architecture (Daniel)
@@ -156,16 +157,31 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - [x] Tests workflow (Daniel).
 - [x] Stage branch for testing (Daniel).
 - [x] Deployment workflow (Daniel).
-- [ ] Community standards for repo (Daniel).
-- [ ] Tickets (Daniel).
+- [x] Tickets (Daniel).
+</details>
+
+<details open>
+<summary>🌟 Iteration 2 🌟</summary>
+
+- [ ] Add ```App/entry.py``` with parsing arguments.
+- [ ] Add ```App/app.h``` main windowed application.
+- [ ] Add camera movement.
+- [ ] Abstract Shape Class.
+- [ ] Class for ```Circle Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Parser class``` in ```parser.py``` and register in main app.
+- [ ] Add ```Circle``` detection and parsing.
+- [ ] ```Lsat Time Write``` detection and regeneration.
 </details>
 
 <details>
-<summary>Iteration 2</summary>
+<summary>Iteration 3</summary>
 
-- [ ] App class that stores data and provides functions for ```arcade``` renderer.
-- [ ] Basic parser class with file validation and checking existence.
-- [ ] Inherit Class for other object classes.
-- [ ] Classes for ```Circle```, ```Rect```, ```Oval```.
+- [ ] Add ```Rect Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Rect``` detection and parsing.
+- [ ] Add ```Oval Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Oval``` detection and parsing.
+- [ ] Add ```Line Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Line``` detection and parsing.
 - [ ] Examples.
+- [ ] Documentation for Writing files.
 </details>
