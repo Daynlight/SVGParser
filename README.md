@@ -17,6 +17,9 @@ SVG Parser is simple **python app** for **parsing** custom file format and showi
   - [Installation](#installation)
   - [Usage](#usage)
   - [Building to executable](#building-to-executable)
+    - [App](#app)
+    - [Tests](#tests)
+  - [Writing Tests](#writing-tests)
   - [Language Syntaxes](#language-syntaxes)
     - [Supported Objects](#supported-objects)
   - [Architecture](#architecture)
@@ -56,14 +59,34 @@ pip install -r requirements.txt
 
 ## Usage
 1. Create your **file.svl** or use one of [**Examples**](/Example)
-2. Run [```main.py```](SVDParser/main.py) with path to **file.svl**.
+2. Run [```main.py```](main.py) with path to **file.svl**.
 
 
 
 ## Building to executable
+### App
 ```bash
-pyinstaller --onefile --windowed SVGParser/main.py
+pyinstaller --onefile --windowed main.py
+./dist/main
 ```
+### Tests
+```bash
+pyinstaller --onefile tests.py
+./dist/tests
+```
+
+
+
+## Writing Tests
+1. Add your ```unit_test.py``` in ```Tests/Unit/```.
+2. Make it inherit from ```testInterface```.
+3. Write ```super``` with test name in constructor.
+4. Add your tests as functions.
+5. Add ```runAll()``` and run your tests from it.
+6. Import your class tests in [tests.py](tests.py).
+7. Run your tests in ```main()```.
+8. For example look on [flags unit tests](Tests/Unit/flags.py)
+
 
 
 ## Language Syntaxes
@@ -106,15 +129,16 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 ### Implementation
 1. We use typeguard for hard typing.
 2. We use ```from static_typing import typechecked``` to avoid issue with ```pyinstaller```.
-3. We always use strict absolute **PATH** to project.
-4. For ```release``` we build it via ```[PyInstaller](http://pyinstaller.org/en/stable/)```.
+3. We always use strict absolute **SRC_PATH** to assets (Should run from every location).
+4. For ```release``` we build it via [**PyInstaller**](http://pyinstaller.org/en/stable/).
 
 
 
 ## Prerequisites [requirements](requirements.txt)
-- **typeguard**: 4.5.2
-- **arcade**: 3.3.3
-- **pyinstaller**: 6.20.0
+- **typeguard**: 4.5.2 - static typing.
+- **arcade**: 3.3.3 - visuals.
+- **pyinstaller**: 6.20.0 - executable builder.
+- **rich**: 15.0.0 - terminal colors.
 
 
 
@@ -128,10 +152,11 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - [x] Language design (Martyna)
 - [x] Basic Renderer with arcade (Daniel)
 - [x] Description for repo (Daniel).
+- [x] Unit Tests structure (Daniel).
+- [ ] Tests workflow (Daniel).
 - [ ] Community standards for repo (Daniel).
 - [ ] Tickets (Daniel).
 - [ ] Stage branch for testing (Daniel).
-- [ ] Unit Tests structure and workflow (Daniel).
 </details>
 
 <details>
@@ -141,4 +166,5 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - [ ] Basic parser class with file validation and checking existence.
 - [ ] Inherit Class for other object classes.
 - [ ] Classes for ```Circle```, ```Rect```, ```Oval```.
+- [ ] Examples.
 </details>

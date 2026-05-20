@@ -1,22 +1,22 @@
-from static_typing import typechecked
+from utils.static_typing import typechecked
 from typing import Callable
 import arcade
 
-import config
+import App.config
 
 
 @typechecked
 class Renderer(arcade.Window):
   @typechecked
   def __init__(self):
-    super().__init__(config.WINDOW_SIZE[0], config.WINDOW_SIZE[1], config.TITLE)
-    arcade.set_background_color(config.BACKGROUND_COLOR)
+    super().__init__(App.config.WINDOW_SIZE[0], App.config.WINDOW_SIZE[1], App.config.TITLE)
+    arcade.set_background_color(App.config.BACKGROUND_COLOR)
     
     self._update_function: Callable[[float], None] = None
     self._fixed_update_function: Callable[[float], None] = None
     self._render_frame: Callable[[], None] = None
 
-    arcade.schedule(self._fixed_update, config.FIXED_UPDATE_INTERVAL)
+    arcade.schedule(self._fixed_update, App.config.FIXED_UPDATE_INTERVAL)
 
 
   def on_draw(self):
