@@ -28,6 +28,10 @@ class testExcept:
     if(result): self._passed += 1
     else: print(f"[red]{self._name} - {name}: Tests doesn't passed[/red]")
 
+  @typechecked
+  def allPassed(self) -> bool:
+    return self._total == self._passed
+  
 
   @typechecked
   def equal(self, name: str, result: int, expected: int):
@@ -38,6 +42,12 @@ class testExcept:
   @typechecked
   def not_equal(self, name: str, result: int, expected: int):
     result: bool = (result != expected)
+    self.registerTest(result, name)
+    return result
+  
+  @typechecked
+  def is_true(self, name: str, result: int):
+    result: bool = (result == True)
     self.registerTest(result, name)
     return result
 
@@ -54,6 +64,7 @@ class testInterface:
     pass
 
   @typechecked
-  def run(self):
+  def run(self) -> bool:
     self.runAll()
     self._test_except.showResult()
+    return self._test_except.allPassed()
