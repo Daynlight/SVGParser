@@ -1,0 +1,4 @@
+Circle(x = 500, y = 300, r = 20);
+Circle(x = 300, r = 50, y=20); 
+Circle(x = 200, y = 400, r = 20); 
+Circle(x = 20, y = 300, r = 80);
