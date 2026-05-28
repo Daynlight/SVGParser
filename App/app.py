@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import arcade
 
-from App.config import WINDOW_SIZE, TITLE, BACKGROUND_COLOR, FIXED_UPDATE_INTERVAL, MOVE_VELOCITY, ZOOM_SPEED, ZOOM_BOUND
+from App.config import WINDOW_SIZE, TITLE, BACKGROUND_COLOR, FIXED_UPDATE_INTERVAL, MOVE_VELOCITY, ZOOM_SPEED, ZOOM_BOUND, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_ZOOM_IN, MOVE_ZOOM_OUT
 from App.flags import Flags
 from App.shapes.shape import Shape
 from App.shapes.circle import Circle
@@ -74,33 +74,33 @@ class App(arcade.Window):
 
   @typechecked
   def on_key_press(self, key: arcade.key, modifiers: any) -> None:
-    if key == arcade.key.W:
+    if key == MOVE_UP:
       self._keys |= KEYS_DOWN.UP
-    if key == arcade.key.S:
+    if key == MOVE_DOWN:
       self._keys |= KEYS_DOWN.DOWN
-    if key == arcade.key.A:
+    if key == MOVE_LEFT:
       self._keys |= KEYS_DOWN.LEFT
-    if key == arcade.key.D:
+    if key == MOVE_RIGHT:
       self._keys |= KEYS_DOWN.RIGHT
-    if key == arcade.key.P:
+    if key == MOVE_ZOOM_IN:
       self._keys |= KEYS_DOWN.ZOOM_IN
-    if key == arcade.key.I:
+    if key == MOVE_ZOOM_OUT:
       self._keys |= KEYS_DOWN.ZOOM_OUT
 
 
   @typechecked
   def on_key_release(self, key: arcade.key, modifiers: any) -> None:
-    if key == arcade.key.W:
+    if key == MOVE_UP:
       self._keys &= ~KEYS_DOWN.UP
-    if key == arcade.key.S:
+    if key == MOVE_DOWN:
       self._keys &= ~KEYS_DOWN.DOWN
-    if key == arcade.key.A:
+    if key == MOVE_LEFT:
       self._keys &= ~KEYS_DOWN.LEFT
-    if key == arcade.key.D:
+    if key == MOVE_RIGHT:
       self._keys &= ~KEYS_DOWN.RIGHT
-    if key == arcade.key.P:
+    if key == MOVE_ZOOM_IN:
       self._keys &= ~KEYS_DOWN.ZOOM_IN
-    if key == arcade.key.I:
+    if key == MOVE_ZOOM_OUT:
       self._keys &= ~KEYS_DOWN.ZOOM_OUT
 
 

@@ -24,6 +24,15 @@ def printHelp() -> None:
 * -h/--help - show this info.
 * -d/--debug - turns debug mode
 
+
+[blue]# Camera Movement[/blue]
+- Move up: W
+- Move down: S
+- Move left: A
+- Move right: D 
+- Move zoom in: P
+- Move zoom out: I
+        
         
 [blue]# Requirements[/blue]
 * typeguard: 4.5.2 - static typing.

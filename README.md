@@ -19,6 +19,7 @@ SVG Parser is simple **python app** for **parsing** custom file format and showi
   - [Building to executable](#building-to-executable)
     - [App](#app)
     - [Tests](#tests)
+  - [Camera Movement](#camera-movement)
   - [Writing Tests](#writing-tests)
   - [Language Syntaxes](#language-syntaxes)
     - [Supported Objects](#supported-objects)
@@ -74,6 +75,16 @@ pyinstaller --onefile --windowed main.py
 pyinstaller --onefile tests.py
 ./dist/tests
 ```
+
+
+
+## Camera Movement
+- Move up: W
+- Move down: S
+- Move left: A
+- Move right: D 
+- Move zoom in: P
+- Move zoom out: I
 
 
 
