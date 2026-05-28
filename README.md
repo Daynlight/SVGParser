@@ -67,7 +67,7 @@ pip install -r requirements.txt
 ### App
 ```bash
 pyinstaller --onefile --windowed main.py
-./dist/main Example/test.svl
+./dist/main Examples/test.svl
 ```
 ### Tests
 ```bash
@@ -140,7 +140,7 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - **arcade**: 3.3.3 - visuals.
 - **pyinstaller**: 6.20.0 - executable builder.
 - **rich**: 15.0.0 - terminal colors.
-- **numpy**: 2.4.6 - mathematical operations.
+- **numpy**: 2.2.6 - mathematical operations.
 
 
 

@@ -30,7 +30,7 @@ def printHelp() -> None:
 * arcade: 3.3.3 - visuals.
 * pyinstaller: 6.20.0 - executable builder.
 * rich: 15.0.0 - terminal colors.
-* numpy: 2.4.6 - mathematical operations.
+* numpy: 2.2.6 - mathematical operations.
 
         
 [blue]# Authors[/blue]
