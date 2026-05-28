@@ -21,8 +21,9 @@ SVG Parser is simple **python app** for **parsing** custom file format and showi
     - [Tests](#tests)
   - [Camera Movement](#camera-movement)
   - [Writing Tests](#writing-tests)
+  - [Adding new Shapes](#adding-new-shapes)
   - [Language Syntaxes](#language-syntaxes)
-    - [Supported Objects](#supported-objects)
+    - [Supported Shapes](#supported-shapes)
   - [Architecture](#architecture)
     - [Start up](#start-up)
     - [Parsing file](#parsing-file)
@@ -100,6 +101,16 @@ pyinstaller --onefile tests.py
 
 
 
+## Adding new Shapes
+1. Copy [shape](App/shapes/shape.py) and edit for new provide all operations.
+2. Register new shape in [shape_register](App/shapes/shapes_register.py).
+3. Add new [Example](Examples/) where you show how to use it.
+4. Cover parsing popery.
+5. Update [Supported Shapes](#supported-shapes).
+6. Add [unit tests](Tests/Unit/) for your shape. 
+
+
+
 ## Language Syntaxes
 1. Each object is separated via ```;```;
 2. Each object is created via keyword of struct ```Circle``` and parameters like ```x=25, y = 30``` separated by ```,```.
@@ -110,7 +121,7 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 
 
 
-### Supported Objects
+### Supported Shapes
 - ```Circle(x, y, r);```
 - ```Rect(x, y, w, h);```
 - ```Oval(x, y, a, b);```

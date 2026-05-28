@@ -6,7 +6,7 @@ from utils.static_typing import typechecked
 @typechecked
 class Shape(ABC):
   @classmethod
-  def getAllShapes(cls):
+  def getAllShapes(cls) -> list[type['Shape']]:
     return cls.__subclasses__()
   
   
@@ -23,8 +23,8 @@ class Shape(ABC):
 
   @typechecked
   @abstractmethod
-  def parse(self, data: str, entry: int) -> None:
-    pass
+  def parse(self, data: str, entry: int) -> bool:
+    return False
 
 
   @typechecked

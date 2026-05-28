@@ -23,21 +23,22 @@ class Circle(Shape):
 
 
   @typechecked
-  def parse(self, data: str, entry: int) -> None:
-    pairs = dict(re.findall(r"([xyr])\s*=\s*([+-]?\d+)", data))
+  def parse(self, data: str, entry: int) -> bool:
+    pairs = dict(re.findall(r"([xyr])\s*=\s*([+-]?\d+(?:\.\d+)?)", data))
   
     required_keys = {'x', 'y', 'r'}
     if not required_keys.issubset(pairs.keys()):
-        missing = required_keys - pairs.keys()
-        print(f"[red]On entry {entry}: Missing parameters {missing} in: {data}[/red]")
-        return
+      missing = required_keys - pairs.keys()
+      print(f"[yellow]On entry {entry}: Missing parameters [/yellow][blue]{missing}[/blue][yellow] in: {data}[/yellow]")
+      return False
 
-    self._position = (int(pairs['x']), int(pairs['y']))
-    self._radius = int(pairs['r'])
+    self._position = (float(pairs['x']), float(pairs['y']))
+    self._radius = float(pairs['r'])
+    return True
 
 
   @typechecked
   @classmethod
   def validate(self, data: str) -> bool:
-    pattern: str = r"Circle"
+    pattern: str = r"[Cc]ircle"
     return bool(re.search(pattern, data))

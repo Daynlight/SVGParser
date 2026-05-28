@@ -41,12 +41,6 @@ class App(arcade.Window):
     self._parser: Parser = Parser(path_to_file)
     self._shapes: list[Shape] = []
 
-    self._startup()
-
-
-  @typechecked
-  def _startup(self) -> None:
-    pass
 
   @typechecked
   def run(self) -> None:
@@ -60,11 +54,6 @@ class App(arcade.Window):
 
     for shape in self._shapes:
       shape.render()
-  
-
-  @typechecked
-  def on_update(self, delta_time: float) -> None:
-    pass
 
 
   @typechecked

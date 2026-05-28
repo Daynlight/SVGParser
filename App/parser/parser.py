@@ -16,10 +16,14 @@ class Parser:
 
   @typechecked
   def observe(self) -> bool:
-    new_last_time_write: float = self._path_to_file.stat().st_mtime
-    changed: bool = self._last_time_write != new_last_time_write
-    self._last_time_write = new_last_time_write
-    return changed
+    try:
+      new_last_time_write: float = self._path_to_file.stat().st_mtime
+      changed: bool = self._last_time_write != new_last_time_write
+      self._last_time_write = new_last_time_write
+      return changed
+    except (OSError, FileNotFoundError):
+      print(f"[red]Can't open file {self._path_to_file}[/red]")
+    return False
   
 
   @typechecked
@@ -31,19 +35,26 @@ class Parser:
       found = False
       for cls in Shape.__subclasses__():
         if cls.validate(shape_data):
-          instance = cls()
-          instance.parse(shape_data, entry)
-          shapes.append(instance)
-          found = True
+          try:
+            instance = cls()
+            if instance.parse(shape_data, entry): 
+              shapes.append(instance)
+            found = True
+          except ValueError as e:
+            print(f"[red]Data error at entry {entry}: {e}[/red]")
           break
-      
       if not found:
-        print(f"[red]Warning: No shape type matched data on entry {entry}: {shape_data}[/red]")
-
+        print(f"[yellow]Skipping unknown shape format at entry {entry}: {shape_data}[/yellow]")
+    
     return shapes
 
 
   @typechecked
-  def _getFileContent(self):
-    content: str = self._path_to_file.read_text(encoding='utf-8')
+  def _getFileContent(self) -> str:
+    try:
+      content: str = self._path_to_file.read_text(encoding='utf-8')
+    except (OSError, FileNotFoundError, PermissionError) as e:
+      print(f"[red]Could not read file: {e}[/red]")
+      return ""
+    
     return content
