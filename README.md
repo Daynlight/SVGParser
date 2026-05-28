@@ -183,8 +183,8 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - [x] Tickets (Daniel).
 </details>
 
-<details open>
-<summary>🌟 Iteration 2 🌟</summary>
+<details>
+<summary>Iteration 2</summary>
 
 - [x] Add ```main.py``` with parsing arguments and starting app (Daniel).
 - [x] Add ```App/app.h``` main windowed application using ```arcade``` (Daniel).
@@ -192,13 +192,13 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - [x] Abstract Shape Class (Daniel).
 - [x] Class for ```Circle Shape``` inherit from **Abstract Shape Class** (Daniel).
 - [x] Unit Tests for ```argv``` parsing via ```re``` (Daniel).
-- [ ] Add ```Parser class``` in ```parser.py``` and register in main app.
-- [ ] Add ```Circle``` detection and parsing.
-- [ ] ```Lsat Time Write``` detection and regeneration.
+- [x] Add ```Parser class``` in ```parser.py``` and register in main app (Daniel).
+- [x] Add ```Circle``` detection and parsing (Daniel).
+- [x] ```Lsat Time Write``` detection and regeneration (Daniel).
 </details>
 
-<details>
-<summary>Iteration 3</summary>
+<details open>
+<summary>🌟 Iteration 3 🌟</summary>
 
 - [ ] Add ```Rect Shape``` inherit from **Abstract Shape Class**.
 - [ ] Add ```Rect``` detection and parsing.
