@@ -9,10 +9,12 @@ class Shape(ABC):
   def __init__(self) -> None:
     pass
 
+
   @typechecked
   @abstractmethod
   def render(self) -> None:
     pass
+
 
   @typechecked
   @abstractmethod

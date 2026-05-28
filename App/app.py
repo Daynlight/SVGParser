@@ -42,10 +42,14 @@ class App(arcade.Window):
     self._startup()
 
 
-
   @typechecked
   def _startup(self) -> None:
     self._shapes.append(Circle((400, 300), 50))
+
+
+  @typechecked
+  def run(self) -> None:
+    arcade.run()
 
 
   @typechecked
@@ -132,8 +136,3 @@ class App(arcade.Window):
       self._camera.zoom += ZOOM_SPEED * delta_time
       if self._camera.zoom > ZOOM_BOUND[1]:
         self._camera.zoom = ZOOM_BOUND[1]
-
-
-  @typechecked
-  def run(self) -> None:
-    arcade.run()

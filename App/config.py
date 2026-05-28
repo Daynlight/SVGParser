@@ -2,6 +2,7 @@ from pathlib import Path
 import arcade
 
 
+
 # Path
 SRC_PATH: Path = Path(__file__).resolve().parent
 

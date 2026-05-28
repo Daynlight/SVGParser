@@ -13,14 +13,11 @@ class Circle(Shape):
     self._radius: int = radius
     self._color: arcade.color = arcade.color.AZURE
 
+
   @typechecked
   def render(self) -> None:
-    arcade.draw_circle_filled(
-      self._position[0],
-      self._position[1],
-      self._radius,
-      self._color
-    )
+    arcade.draw_circle_filled(self._position[0], self._position[1], self._radius, self._color)
+
 
   @typechecked
   def parse(self, data: str) -> None:
