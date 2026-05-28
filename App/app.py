@@ -1,42 +1,31 @@
 from utils.static_typing import typechecked
 from pathlib import Path
-import sys
+import arcade
 
-import App.help_command
-import App.flags
-import App.renderer
+from App.config import WINDOW_SIZE, TITLE, BACKGROUND_COLOR, FIXED_UPDATE_INTERVAL
+from App.flags import Flags
 
-
-@typechecked
-def update(dt: float):
-  print("Update:", dt)
-
-@typechecked
-def fixed_update(dt: float):
-  print("Fixed:", dt)
-
-@typechecked
-def render_frame():
-  print("Render Frame")
 
 
 @typechecked
-def app(argv: list[str]):
-  if(argv is None or len(argv) <= 0):
-    raise Exception("No path provided") 
+class App(arcade.Window):
+  @typechecked
+  def __init__(self, path_to_file: Path, enabled_flags: Flags) -> None:
+    super().__init__(WINDOW_SIZE[0], WINDOW_SIZE[1], TITLE)
+    arcade.set_background_color(BACKGROUND_COLOR)
+    arcade.schedule(self.fixed_update, FIXED_UPDATE_INTERVAL)
+    self._path_to_file: Path = path_to_file
+    self._enabled_flags: Flags = enabled_flags
 
-  enabled_flags: App.flags.Flags = App.flags.parseFlags(argv)
-  if(enabled_flags & App.flags.Flags.HELP): 
-      App.help_command.printHelp()
-      sys.exit(0)
-
-  if(argv[-1][0] == '-'):
-    raise Exception("No path provided") 
+  def on_draw(self) -> None:
+    self.clear()
   
-  path_to_file: str = str(Path(argv[-1]).resolve())
+  def on_update(self, delta_time) -> None:
+    pass
+  
+  def fixed_update(self, delta_time) -> None:
+    pass
 
-  window: App.renderer.Renderer = App.renderer.Renderer()
-  window.setUpdateFunction(update)
-  window.setFixedFunction(fixed_update)
-  window.setRenderFrame(render_frame)
-  window.run()
+  @typechecked
+  def run(self) -> None:
+    arcade.run()

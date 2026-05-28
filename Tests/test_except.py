@@ -34,19 +34,41 @@ class testExcept:
   
 
   @typechecked
-  def equal(self, name: str, result: int, expected: int):
+  def success(self, name: str):
+    self.registerTest(True, name)
+    return True
+  
+  @typechecked
+  def fail(self, name: str):
+    self.registerTest(False, name)
+    return False
+  
+  @typechecked
+  def int_equal(self, name: str, result: int, expected: int):
     result: bool = (result == expected)
     self.registerTest(result, name)
     return result
   
   @typechecked
-  def not_equal(self, name: str, result: int, expected: int):
+  def str_equal(self, name: str, result: str, expected: str):
+    result: bool = (result == expected)
+    self.registerTest(result, name)
+    return result
+  
+  @typechecked
+  def int_not_equal(self, name: str, result: int, expected: int):
     result: bool = (result != expected)
     self.registerTest(result, name)
     return result
   
   @typechecked
-  def is_true(self, name: str, result: int):
+  def str_not_equal(self, name: str, result: str, expected: str):
+    result: bool = (result != expected)
+    self.registerTest(result, name)
+    return result
+  
+  @typechecked
+  def is_true(self, name: str, result: bool):
     result: bool = (result == True)
     self.registerTest(result, name)
     return result
