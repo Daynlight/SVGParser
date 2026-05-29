@@ -1,42 +1,138 @@
 from utils.static_typing import typechecked
+from enum import IntFlag, auto
 from pathlib import Path
-import sys
+import numpy as np
+import arcade
 
-import App.help_command
-import App.flags
-import App.renderer
+from App.config import WINDOW_SIZE, TITLE, BACKGROUND_COLOR, FIXED_UPDATE_INTERVAL, MOVE_VELOCITY, ZOOM_SPEED, ZOOM_BOUND, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_ZOOM_IN, MOVE_ZOOM_OUT
+from App.flags import Flags
+from App.shapes.shape import Shape
+from App.shapes.circle import Circle
 
-
-@typechecked
-def update(dt: float):
-  print("Update:", dt)
-
-@typechecked
-def fixed_update(dt: float):
-  print("Fixed:", dt)
-
-@typechecked
-def render_frame():
-  print("Render Frame")
 
 
 @typechecked
-def app(argv: list[str]):
-  if(argv is None or len(argv) <= 0):
-    raise Exception("No path provided") 
+class KEYS_DOWN(IntFlag):
+  NONE = 0
+  UP = auto()
+  DOWN = auto()
+  LEFT = auto()
+  RIGHT = auto()
+  ZOOM_IN = auto()
+  ZOOM_OUT = auto()
 
-  enabled_flags: App.flags.Flags = App.flags.parseFlags(argv)
-  if(enabled_flags & App.flags.Flags.HELP): 
-      App.help_command.printHelp()
-      sys.exit(0)
 
-  if(argv[-1][0] == '-'):
-    raise Exception("No path provided") 
+
+@typechecked
+class App(arcade.Window):
+  @typechecked
+  def __init__(self, path_to_file: Path, enabled_flags: Flags) -> None:
+    super().__init__(WINDOW_SIZE[0], WINDOW_SIZE[1], TITLE)
+    arcade.set_background_color(BACKGROUND_COLOR)
+    
+    self._camera: arcade.camera = arcade.camera.Camera2D()
+    self._keys: KEYS_DOWN = KEYS_DOWN.NONE
+
+    arcade.schedule(self.fixed_update, FIXED_UPDATE_INTERVAL)
+    
+    self._path_to_file: Path = path_to_file
+    self._enabled_flags: Flags = enabled_flags
+    self._shapes: list[Shape] = []
+
+    self._startup()
+
+
+  @typechecked
+  def _startup(self) -> None:
+    self._shapes.append(Circle((400, 300), 50))
+
+
+  @typechecked
+  def run(self) -> None:
+    arcade.run()
+
+
+  @typechecked
+  def on_draw(self) -> None:
+    self.clear()
+    self._camera.use()
+
+    for shape in self._shapes:
+      shape.render()
   
-  path_to_file: str = str(Path(argv[-1]).resolve())
 
-  window: App.renderer.Renderer = App.renderer.Renderer()
-  window.setUpdateFunction(update)
-  window.setFixedFunction(fixed_update)
-  window.setRenderFrame(render_frame)
-  window.run()
+  @typechecked
+  def on_update(self, delta_time: float) -> None:
+    pass
+
+
+  @typechecked
+  def fixed_update(self, delta_time: float) -> None:
+    self._cameraMovement(delta_time)
+    self._zoomUpdate(delta_time)
+
+
+  @typechecked
+  def on_key_press(self, key: arcade.key, modifiers: any) -> None:
+    if key == MOVE_UP:
+      self._keys |= KEYS_DOWN.UP
+    if key == MOVE_DOWN:
+      self._keys |= KEYS_DOWN.DOWN
+    if key == MOVE_LEFT:
+      self._keys |= KEYS_DOWN.LEFT
+    if key == MOVE_RIGHT:
+      self._keys |= KEYS_DOWN.RIGHT
+    if key == MOVE_ZOOM_IN:
+      self._keys |= KEYS_DOWN.ZOOM_IN
+    if key == MOVE_ZOOM_OUT:
+      self._keys |= KEYS_DOWN.ZOOM_OUT
+
+
+  @typechecked
+  def on_key_release(self, key: arcade.key, modifiers: any) -> None:
+    if key == MOVE_UP:
+      self._keys &= ~KEYS_DOWN.UP
+    if key == MOVE_DOWN:
+      self._keys &= ~KEYS_DOWN.DOWN
+    if key == MOVE_LEFT:
+      self._keys &= ~KEYS_DOWN.LEFT
+    if key == MOVE_RIGHT:
+      self._keys &= ~KEYS_DOWN.RIGHT
+    if key == MOVE_ZOOM_IN:
+      self._keys &= ~KEYS_DOWN.ZOOM_IN
+    if key == MOVE_ZOOM_OUT:
+      self._keys &= ~KEYS_DOWN.ZOOM_OUT
+
+
+  @typechecked
+  def _cameraMovement(self, delta_time: float) -> None:
+    move_vector: np.ndarray = np.array([0, 0], dtype=float)
+
+    if self._keys & KEYS_DOWN.UP:
+      move_vector[1] += 1
+    if self._keys & KEYS_DOWN.DOWN:
+      move_vector[1] -= 1
+    if self._keys & KEYS_DOWN.LEFT:
+      move_vector[0] -= 1
+    if self._keys & KEYS_DOWN.RIGHT:
+      move_vector[0] += 1
+
+    move_vector_norm: float = np.linalg.norm(move_vector)
+    if(move_vector_norm != 0):
+      move_vector: np.ndarray = (move_vector / move_vector_norm) * MOVE_VELOCITY * delta_time
+      camera_pos: np.ndarray = np.array([self._camera.position.x, self._camera.position.y], dtype=float)
+      camera_pos: np.ndarray = camera_pos + move_vector
+      self._camera.position = (camera_pos[0], camera_pos[1])
+
+
+  @typechecked
+  def _zoomUpdate(self, delta_time: float) -> None:
+    if(self._keys & KEYS_DOWN.ZOOM_OUT):
+      self._camera.zoom -= ZOOM_SPEED * delta_time
+      if self._camera.zoom < ZOOM_BOUND[0]:
+        self._camera.zoom = ZOOM_BOUND[0]
+
+    if(self._keys & KEYS_DOWN.ZOOM_IN):
+      self._camera.zoom += ZOOM_SPEED * delta_time
+      if self._camera.zoom > ZOOM_BOUND[1]:
+        self._camera.zoom = ZOOM_BOUND[1]

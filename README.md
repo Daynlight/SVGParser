@@ -19,6 +19,7 @@ SVG Parser is simple **python app** for **parsing** custom file format and showi
   - [Building to executable](#building-to-executable)
     - [App](#app)
     - [Tests](#tests)
+  - [Camera Movement](#camera-movement)
   - [Writing Tests](#writing-tests)
   - [Language Syntaxes](#language-syntaxes)
     - [Supported Objects](#supported-objects)
@@ -67,13 +68,23 @@ pip install -r requirements.txt
 ### App
 ```bash
 pyinstaller --onefile --windowed main.py
-./dist/main
+./dist/main Examples/test.svl
 ```
 ### Tests
 ```bash
 pyinstaller --onefile tests.py
 ./dist/tests
 ```
+
+
+
+## Camera Movement
+- Move up: W
+- Move down: S
+- Move left: A
+- Move right: D 
+- Move zoom in: P
+- Move zoom out: I
 
 
 
@@ -140,6 +151,7 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - **arcade**: 3.3.3 - visuals.
 - **pyinstaller**: 6.20.0 - executable builder.
 - **rich**: 15.0.0 - terminal colors.
+- **numpy**: 2.2.6 - mathematical operations.
 
 
 
@@ -148,9 +160,9 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 <details>
 <summary>Iteration 1</summary>
 
+- [x] Language design (Martyna)
 - [x] Setup repo (Daniel)
 - [x] Architecture (Daniel)
-- [x] Language design (Martyna)
 - [x] Basic Renderer with arcade (Daniel)
 - [x] Description for repo (Daniel).
 - [x] Unit Tests structure (Daniel).
@@ -163,11 +175,12 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 <details open>
 <summary>🌟 Iteration 2 🌟</summary>
 
-- [ ] Add ```App/entry.py``` with parsing arguments.
-- [ ] Add ```App/app.h``` main windowed application.
-- [ ] Add camera movement.
-- [ ] Abstract Shape Class.
-- [ ] Class for ```Circle Shape``` inherit from **Abstract Shape Class**.
+- [x] Add ```main.py``` with parsing arguments and starting app (Daniel).
+- [x] Add ```App/app.h``` main windowed application using ```arcade``` (Daniel).
+- [x] Add camera movement (Daniel).
+- [x] Abstract Shape Class (Daniel).
+- [x] Class for ```Circle Shape``` inherit from **Abstract Shape Class** (Daniel).
+- [x] Unit Tests for ```argv``` parsing via ```re``` (Daniel).
 - [ ] Add ```Parser class``` in ```parser.py``` and register in main app.
 - [ ] Add ```Circle``` detection and parsing.
 - [ ] ```Lsat Time Write``` detection and regeneration.
