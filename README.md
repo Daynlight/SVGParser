@@ -19,9 +19,11 @@ SVG Parser is simple **python app** for **parsing** custom file format and showi
   - [Building to executable](#building-to-executable)
     - [App](#app)
     - [Tests](#tests)
+  - [Camera Movement](#camera-movement)
   - [Writing Tests](#writing-tests)
+  - [Adding new Shapes](#adding-new-shapes)
   - [Language Syntaxes](#language-syntaxes)
-    - [Supported Objects](#supported-objects)
+    - [Supported Shapes](#supported-shapes)
   - [Architecture](#architecture)
     - [Start up](#start-up)
     - [Parsing file](#parsing-file)
@@ -67,13 +69,23 @@ pip install -r requirements.txt
 ### App
 ```bash
 pyinstaller --onefile --windowed main.py
-./dist/main
+./dist/main Examples/test.svl
 ```
 ### Tests
 ```bash
 pyinstaller --onefile tests.py
 ./dist/tests
 ```
+
+
+
+## Camera Movement
+- Move up: W
+- Move down: S
+- Move left: A
+- Move right: D 
+- Move zoom in: P
+- Move zoom out: I
 
 
 
@@ -89,6 +101,16 @@ pyinstaller --onefile tests.py
 
 
 
+## Adding new Shapes
+1. Copy [shape](App/shapes/shape.py) and edit for new provide all operations.
+2. Register new shape in [shape_register](App/shapes/shapes_register.py).
+3. Add new [Example](Examples/) where you show how to use it.
+4. Cover parsing popery.
+5. Update [Supported Shapes](#supported-shapes).
+6. Add [unit tests](Tests/Unit/) for your shape. 
+
+
+
 ## Language Syntaxes
 1. Each object is separated via ```;```;
 2. Each object is created via keyword of struct ```Circle``` and parameters like ```x=25, y = 30``` separated by ```,```.
@@ -99,10 +121,11 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 
 
 
-### Supported Objects
+### Supported Shapes
 - ```Circle(x, y, r);```
 - ```Rect(x, y, w, h);```
 - ```Oval(x, y, a, b);```
+- ```Line(x1, y1, x2, y2, s);```
 
 
 
@@ -139,33 +162,50 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 - **arcade**: 3.3.3 - visuals.
 - **pyinstaller**: 6.20.0 - executable builder.
 - **rich**: 15.0.0 - terminal colors.
+- **numpy**: 2.2.6 - mathematical operations.
 
 
 
 ## Tasks
 
-<details open>
-<summary>🌟 Iteration 1 🌟</summary>
+<details>
+<summary>Iteration 1</summary>
 
+- [x] Language design (Martyna)
 - [x] Setup repo (Daniel)
 - [x] Architecture (Daniel)
-- [x] Language design (Martyna)
 - [x] Basic Renderer with arcade (Daniel)
 - [x] Description for repo (Daniel).
 - [x] Unit Tests structure (Daniel).
 - [x] Tests workflow (Daniel).
 - [x] Stage branch for testing (Daniel).
 - [x] Deployment workflow (Daniel).
-- [ ] Community standards for repo (Daniel).
-- [ ] Tickets (Daniel).
+- [x] Tickets (Daniel).
 </details>
 
 <details>
 <summary>Iteration 2</summary>
 
-- [ ] App class that stores data and provides functions for ```arcade``` renderer.
-- [ ] Basic parser class with file validation and checking existence.
-- [ ] Inherit Class for other object classes.
-- [ ] Classes for ```Circle```, ```Rect```, ```Oval```.
+- [x] Add ```main.py``` with parsing arguments and starting app (Daniel).
+- [x] Add ```App/app.h``` main windowed application using ```arcade``` (Daniel).
+- [x] Add camera movement (Daniel).
+- [x] Abstract Shape Class (Daniel).
+- [x] Class for ```Circle Shape``` inherit from **Abstract Shape Class** (Daniel).
+- [x] Unit Tests for ```argv``` parsing via ```re``` (Daniel).
+- [x] Add ```Parser class``` in ```parser.py``` and register in main app (Daniel).
+- [x] Add ```Circle``` detection and parsing (Daniel).
+- [x] ```Lsat Time Write``` detection and regeneration (Daniel).
+</details>
+
+<details open>
+<summary>🌟 Iteration 3 🌟</summary>
+
+- [ ] Add ```Rect Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Rect``` detection and parsing.
+- [ ] Add ```Oval Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Oval``` detection and parsing.
+- [ ] Add ```Line Shape``` inherit from **Abstract Shape Class**.
+- [ ] Add ```Line``` detection and parsing.
 - [ ] Examples.
+- [ ] Documentation for Writing files.
 </details>
