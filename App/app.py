@@ -6,8 +6,9 @@ import arcade
 
 from App.config import WINDOW_SIZE, TITLE, BACKGROUND_COLOR, FIXED_UPDATE_INTERVAL, MOVE_VELOCITY, ZOOM_SPEED, ZOOM_BOUND, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_ZOOM_IN, MOVE_ZOOM_OUT
 from App.flags import Flags
+from App.parser.parser import Parser
 from App.shapes.shape import Shape
-from App.shapes.circle import Circle
+import App.shapes.shapes_register
 
 
 
@@ -35,16 +36,10 @@ class App(arcade.Window):
 
     arcade.schedule(self.fixed_update, FIXED_UPDATE_INTERVAL)
     
-    self._path_to_file: Path = path_to_file
     self._enabled_flags: Flags = enabled_flags
+
+    self._parser: Parser = Parser(path_to_file)
     self._shapes: list[Shape] = []
-
-    self._startup()
-
-
-  @typechecked
-  def _startup(self) -> None:
-    self._shapes.append(Circle((400, 300), 50))
 
 
   @typechecked
@@ -59,17 +54,15 @@ class App(arcade.Window):
 
     for shape in self._shapes:
       shape.render()
-  
-
-  @typechecked
-  def on_update(self, delta_time: float) -> None:
-    pass
 
 
   @typechecked
   def fixed_update(self, delta_time: float) -> None:
     self._cameraMovement(delta_time)
     self._zoomUpdate(delta_time)
+    if(self._parser.observe()):
+      self._shapes.clear()
+      self._shapes = self._parser.getShapes()
 
 
   @typechecked
