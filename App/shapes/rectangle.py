@@ -23,6 +23,14 @@ class Rectangle(Shape):
 
     @typechecked
     def parse(self, data: str, entry: int) -> bool:
+        data = re.sub(r"^[Rr]ectangle\s*\(\s*", "", data)
+        data = re.sub(r"\)\s*;?\s*$", "", data)
+        pattern = r"^\s*(?:[xywh]\s*=\s*[+-]?\d+(?:\.\d+)?\s*,\s*)*[xywh]\s*=\s*[+-]?\d+(?:\.\d+)?\s*;?\s*$"
+
+        if not re.fullmatch(pattern, data, re.VERBOSE):
+            print(f"[yellow]On entry {entry}: invalid format[/yellow] [blue]{data}[/blue]")
+            return False
+    
         pairs = dict(re.findall(r"([xywh])\s*=\s*([+-]?\d+(?:\.\d+)?)", data))
 
         required_keys = {'x', 'y', 'w', 'h'}
