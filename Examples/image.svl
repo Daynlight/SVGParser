@@ -1,0 +1,6 @@
+Circle(x = 500, y = 700, r = 50, color = #2C3E50);
+Line(x1 = 500, y1 = 650, x2 = 500, y2 = 400, w = 8, color = #2C3E50);
+Line(x1 = 500, y1 = 600, x2 = 380, y2 = 500, w = 6, color = #2C3E50);
+Line(x1 = 500, y1 = 600, x2 = 620, y2 = 500, w = 6, color = #2C3E50);
+Line(x1 = 500, y1 = 400, x2 = 420, y2 = 200, w = 8, color = #2C3E50);
+Line(x1 = 500, y1 = 400, x2 = 580, y2 = 200, w = 8, color = #2C3E50);

@@ -12,11 +12,9 @@ permissions:
   contents: write
   pull-requests: write
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
 
@@ -34,23 +32,67 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run python Tests
-      run: |
-        python tests.py
+      run: python tests.py
 
     - name: Build test executable
-      run: |
-        pyinstaller --onefile tests.py
+      run: pyinstaller --onefile tests.py
 
     - name: Run executable Tests
-      run: |
-        ./dist/tests
+      run: ./dist/tests
 
+  build_linux_executable:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build executable
+        run: pyinstaller --onefile --windowed main.py
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-executable
+          path: dist/main
+
+  build_windows_executable:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Windows executable
+        run: pyinstaller --onefile --windowed main.py
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-executable
+          path: dist/main.exe
 
   merge-to-deploy:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -65,7 +107,6 @@ jobs:
       - name: Checkout or create deploy
         run: |
           git fetch origin
-
           if git show-ref --verify --quiet refs/remotes/origin/deploy; then
             git checkout deploy
             git pull origin deploy
@@ -74,64 +115,54 @@ jobs:
           fi
 
       - name: Clean old build (keep git)
-        run: |
-          find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+        run: find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
 
       - name: Add new executable
-        run: |
-          cp -r /tmp/app/* . 
+        run: cp -r /tmp/app/* . 
 
       - name: Commit into deploy and create tag
         run: |
           VERSION=${{ github.event.inputs.version }}
-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-
           git add -A
           git commit -m"Deploy ${VERSION}" || echo "No changes to commit"
-
           git tag -a "${VERSION}" -m "Release ${VERSION}"
-
           git push origin deploy
           git push origin --tags
 
-
-
   deploy_executable:
-    needs: build
+    needs: [build_linux_executable, build_windows_executable]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+      - name: Download Linux Executable
+        uses: actions/download-artifact@v4
         with:
-          python-version: "3.10"
+          name: linux-executable
+          path: ./downloaded-linux
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Build executable
-        run: |
-          pyinstaller --onefile --windowed main.py
+      - name: Download Windows Executable
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-executable
+          path: ./downloaded-windows
 
       - name: Copy files to tmp
         run: |
           rm -rf /tmp/app
           mkdir -p /tmp/app
-          cp -r ./dist/main /tmp/app/SVGParser
-          cp -r ./LICENSE /tmp/app/LICENSE
-          cp -r ./README.md /tmp/app/README.md
+          cp ./downloaded-linux/main /tmp/app/SVGParser
+          cp ./downloaded-windows/main.exe /tmp/app/SVGParser.exe
+          cp ./LICENSE /tmp/app/LICENSE
+          cp ./README.md /tmp/app/README.md
 
       - name: Checkout or create deploy_executable
         run: |
           git fetch origin
-
           if git show-ref --verify --quiet refs/remotes/origin/deploy_executable; then
             git checkout deploy_executable
             git pull origin deploy_executable
@@ -140,27 +171,22 @@ jobs:
           fi
 
       - name: Clean old build (keep git)
-        run: |
-          find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+        run: find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
 
-      - name: Add new executable
+      - name: Add new executables
         run: |
-          cp -r /tmp/app/SVGParser . 
-          cp -r /tmp/app/LICENSE . 
-          cp -r /tmp/app/README.md . 
+          cp /tmp/app/SVGParser . 
+          cp /tmp/app/SVGParser.exe . 
+          cp /tmp/app/LICENSE . 
+          cp /tmp/app/README.md . 
 
       - name: Commit into deploy executable and create tag
         run: |
           VERSION=${{ github.event.inputs.version }}
-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-
           git add -A
-          git commit -m"Deploy executable ${VERSION}" || echo "No changes to commit"
-
+          git commit -m"Deploy binaries ${VERSION}" || echo "No changes to commit"
           git tag -a "${VERSION}-executable" -m "Release ${VERSION} executable"
-
           git push origin deploy_executable
           git push origin --tags
-

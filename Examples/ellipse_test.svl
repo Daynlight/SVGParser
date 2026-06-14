@@ -1,0 +1,15 @@
+Ellipse(x = 500, y = 300, rx = 120, ry = 20);
+Ellipse(x = 300, rx = 50, ry = 150, y = 20); 
+Ellipse(x = 200, y = 400, rx = 20, ry = 80); 
+Ellipse(x = 20, y = 300, rx = 50, ry = 80, c = #A5FF31);
+ellipse(x = 600, rx = 140, ry = 40, y = 1.9, color = #7683A2);
+Ellipse(x = 500, y = 300);
+Ellipse(y = 300, rx = 120, ry = 20);
+Ellipse(x = 500, y = 300, rx = "duży", ry = "duży");
+Ellipse(x = 500, y = 300, rx = 30, ry = 20, color = );
+Ellipse(x = 500, y = 300, rx = 20, ry = 20, c = #GGGGGG);
+Ellipse(x = , y = 300, rx = 20, ry = 20);
+Ellipse(x = 500, y = 300, rx = 20, ry = 20, color = red);
+Ellipse(x = 500.500.500, y = 300, rx = 20, ry = 20);
+Ellipse(x = 500, y = 300, rx = 20, ry = 20, color = #A5FF31;
+Ellipse(x = 500, y = 300, rx = -5, ry = -5);
