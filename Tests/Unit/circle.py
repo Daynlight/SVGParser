@@ -21,6 +21,7 @@ class CircleUnitTests(testInterface):
     self.testParsingSuccess()
     self.testParsingMissingParams()
     self.testParsingInvalidValues()
+    self.testParsingColors()
 
 
   @typechecked
@@ -64,3 +65,24 @@ class CircleUnitTests(testInterface):
     with redirect_stdout(io.StringIO()):
       success: bool = circle.parse("Circle(x=abc, y=20, r=5)", 4)
     self._test_except.is_false("testParsingInvalidValues: Should have return False for invalid coordinate 'abc'", success)
+
+  def testParsingColors(self) -> None:
+    rect = Circle()
+
+    with redirect_stdout(io.StringIO()):
+        s1 = rect.parse("Circle(x = 400, y = 50.7, r = 50.3, color = #FF0000);", 14)
+        s2 = rect.parse("Circle(x = 40, y = 500, r = 20.3, color = green);", 15)
+        s3 = rect.parse("Circle(x = 467, y = 56, r = 67.9, c = green);", 16)
+    
+    self._test_except.is_true("testParsingColors: Should accept valid hex color", s1)
+    self._test_except.is_true("testParsingColors: Should accept valid named color", s2)
+    self._test_except.is_true("testParsingColors: Should accept valid shorthand 'c'", s3)
+
+    with redirect_stdout(io.StringIO()):
+        s4 = rect.parse("Circle(x = 29, y = 92, r = 50.3, color = greu);", 17)
+        s5 = rect.parse("Circle(x = 27, y = 150, r = 120.3, color #yt6789);", 18)
+        s6 = rect.parse("Circle(x = 240, y = 74, r = 40.5, color = #yt6789);", 19)
+
+    self._test_except.is_false("testParsingColors: Should fail on unknown color name", s4)
+    self._test_except.is_false("testParsingColors: Should fail on invalid syntax (missing equals)", s5)
+    self._test_except.is_false("testParsingColors: Should fail on invalid hex format", s6)
