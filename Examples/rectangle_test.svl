@@ -13,3 +13,5 @@ Rectangle(x = 450, y = 230, w = 122, h = 76,);
 Rectangle(x == 450, y = 230, w = 122, h = 76);
 Rectangle(x = -10, y = 20, w = 30, h = 40);
 Rectangle(x = abc, y = 20, w = 30, h = 40);
+Rectangle(x = 400, y = 50.7, w = 50.3, h = 60.7, color = #FF0000);
+Rectangle(x = 40, y = 500, w = 50.3, h = 60.7, color = green);
