@@ -48,9 +48,14 @@ class Rectangle(Shape):
             print(f"[yellow]On entry {entry}: Unrecognized parameters [/yellow][red]{invalid_keys}[/red][yellow] in: {data}[/yellow]")
             return False
         
-        self._position = (float(pairs['x']), float(pairs['y']))
-        self._width = float(pairs['w'])
-        self._height = float(pairs['h'])
+        try:
+            self._position = (float(pairs['x']), float(pairs['y']))
+            self._width = float(pairs['w'])
+            self._height = float(pairs['h'])
+        except ValueError:
+            print(f"[yellow]On entry {entry}: Invalid numeric value in {data}[/yellow]")
+            return False
+
 
         if 'color' in pairs:
             self._color = ColorParser.parse(pairs['color'])
