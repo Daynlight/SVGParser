@@ -19,8 +19,7 @@ class Rectangle(Shape):
 
     @typechecked
     def render(self) -> None:
-        arcade.draw_lbwh_rectangle_filled(self._position[0], self._position[1], self._width, self._height, self._color)
-    
+        arcade.draw_lbwh_rectangle_filled(self._position[0], self._position[1]- self._height, self._width, self._height, self._color)
 
     @typechecked
     def parse(self, data: str, entry: int) -> bool:
