@@ -20,6 +20,7 @@ class RectangleUnitTests(testInterface):
         self.testParsingSuccess()
         self.testParsingMissingParams()
         self.testParsingMalformedSyntax()
+        self.testParsingColors()
 
 
     @typechecked
@@ -89,6 +90,8 @@ class RectangleUnitTests(testInterface):
 
             success8 = rect.parse("Rectangle(x = abc, y = 20, w = 30, h = 40);", 13)
 
+            success9 = rect.parse("Rectangle(x = abc, y = jujfl, w = 30, h = 40);", 13)
+
         self._test_except.is_false("testParsingMalformedSyntax: Should fail on garbage string quotes", success1)
         self._test_except.is_false("testParsingMalformedSyntax: Should fail on missing comma", success2)
         self._test_except.is_false("testParsingMalformedSyntax: Should fail on missing value after equals (w=)", success3)
@@ -97,4 +100,26 @@ class RectangleUnitTests(testInterface):
         self._test_except.is_false("testParsingMalformedSyntax: Should fail on trailing comma", success6)
         self._test_except.is_false("testParsingMalformedSyntax: Should fail on double equals symbol", success7)
         self._test_except.is_false("testParsingMalformedSyntax: Should fail on letters instead of numbers", success8)
+        self._test_except.is_false("testParsingMalformedSyntax: Should fail on letters instead of numbers", success9)
 
+    @typechecked
+    def testParsingColors(self) -> None:
+        rect = Rectangle()
+
+        with redirect_stdout(io.StringIO()):
+            s1 = rect.parse("Rectangle(x = 400, y = 50.7, w = 50.3, h = 60.7, color = #FF0000);", 14)
+            s2 = rect.parse("Rectangle(x = 40, y = 500, w = 50.3, h = 60.7, color = green);", 15)
+            s3 = rect.parse("Rectangle(x = 467, y = 56, w = 50.3, h = 60.7, c = green);", 16)
+        
+        self._test_except.is_true("testParsingColors: Should accept valid hex color", s1)
+        self._test_except.is_true("testParsingColors: Should accept valid named color", s2)
+        self._test_except.is_true("testParsingColors: Should accept valid shorthand 'c'", s3)
+
+        with redirect_stdout(io.StringIO()):
+            s4 = rect.parse("Rectangle(x = 40, y = 500, w = 50.3, h = 60.7, color = greu);", 17)
+            s5 = rect.parse("Rectangle(x = 40, y = 500, w = 50.3, h = 60.7, color #yt6789);", 18)
+            s6 = rect.parse("Rectangle(x = 40, y = 500, w = 50.3, h = 60.7, color = #yt6789);", 19)
+
+        self._test_except.is_false("testParsingColors: Should fail on unknown color name", s4)
+        self._test_except.is_false("testParsingColors: Should fail on invalid syntax (missing equals)", s5)
+        self._test_except.is_false("testParsingColors: Should fail on invalid hex format", s6)
