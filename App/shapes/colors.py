@@ -36,4 +36,4 @@ class ColorParser:
         if re.match(r"^#(?:[0-9a-fA-F]{3}){1,2}$", clean_color):
             return self.hex_to_rgb(clean_color)
         else:
-            return arcade.color.BLACK
+            return None

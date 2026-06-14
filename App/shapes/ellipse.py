@@ -6,40 +6,43 @@ import re
 from App.shapes.shape import Shape
 from App.shapes.colors import ColorParser
 
-@typechecked
-class Line(Shape):
-    @typechecked
 
-    def __init__(self, start_position: tuple[int, int] = (0, 0), end_position: tuple[int, int] = (0, 0), line_width: int = 0):
+@typechecked
+
+class Ellipse(Shape):
+
+    @typechecked
+    def __init__(self, position: tuple[int, int] = (0, 0), x_radius: int = 0, y_radius: int = 0):
         super().__init__()
 
-        self._start_position: tuple[int, int] = start_position
-        self._end_position: tuple[int, int] = end_position
-        self._line_width: int = line_width
+        self._position: tuple[int, int] = position
+        self._x_radius: int = x_radius
+        self._y_radius: int = y_radius
         self._color: arcade.color = arcade.color.AZURE
 
     @typechecked
     def render(self) -> None:
-        arcade.draw_line(self._start_position[0], self._start_position[1], self._end_position[0], self._end_position[1],
-                    self._color, self._line_width)
+        arcade.draw_ellipse_filled(self._position[0], self._position[1], self._x_radius, self._y_radius, self._color)
         
     @typechecked
-    def parse(self, data: str, entry: int ) -> bool:
+    def parse(self, data: str, entry: int) -> bool:
 
         if not re.search(r"\)\s*;?\s*$", data):
             print(f"[yellow]On entry {entry}: missing closing bracket[/yellow] [blue]{data}[/blue]")
             return False
         
-        data = re.sub(r"^[Ll]ine\s*\(\s*", "", data)
+        data = re.sub(r"^[Ee]llipse\s*\(\s*", "", data)
         data = re.sub(r"\)\s*;?\s*$", "", data)
+        pattern = r'^\s*(?:(?:x|y|rx|ry|c|color)\s*=\s*[\w#\'".+-]+\s*,\s*)*(?:x|y|rx|ry|c|color)\s*=\s*[\w#\'".+-]+\s*;?\s*$'
 
-        pattern = r'^\s*(?:(?:x1|y1|x2|y2|w|c|color)\s*=\s*[\w#\'".+-]+\s*,\s*)*(?:x1|y1|x2|y2|w|c|color)\s*=\s*[\w#\'".+-]+\s*;?\s*$'
+        if not re.fullmatch(pattern, data):
+            print(f"[yellow]On entry {entry}: invalid format[/yellow] [blue]{data}[/blue]")
+            return False
 
+        pairs = dict(re.findall(r"(x|y|rx|ry|c|color)\s*=\s*([\w#'\".+-]+)", data))
 
-        pairs = dict(re.findall(r"(x1|y1|x2|y2|w|c|color)\s*=\s*([\w#'\".+-]+)", data))
-
-        required_keys = {'x1', 'y1', 'x2', 'y2', 'w'}
-        allowed_keys = {'x1', 'y1', 'x2', 'y2', 'w', 'c', 'color'}
+        required_keys = {'x', 'y', 'rx', 'ry'}
+        allowed_keys = {'x', 'y', 'rx', 'ry', 'c', 'color'}
 
         if not required_keys.issubset(pairs.keys()):
             missing = required_keys - pairs.keys()
@@ -52,9 +55,9 @@ class Line(Shape):
             return False
         
         try:
-            self._start_position = (float(pairs['x1']), float(pairs['y1']))
-            self._end_position = (float(pairs['x2']), float(pairs['y2']))
-            self._line_width = float(pairs['w'])
+            self._position = (float(pairs['x']), float(pairs['y']))
+            self._x_radius = float(pairs['rx'])
+            self._y_radius = float(pairs['ry'])
         except ValueError:
             print(f"[yellow]On entry {entry}: Invalid numeric value in {data}[/yellow]")
             return False
@@ -76,5 +79,5 @@ class Line(Shape):
     @typechecked
     @classmethod
     def validate(self, data: str) -> bool:
-        pattern: str = r"[Ll]ine"
+        pattern: str = r"[Ee]llipse"
         return bool(re.search(pattern, data))

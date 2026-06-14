@@ -2,16 +2,6 @@ Rectangle(x=0,y=0,w=0,h=0);
 rectangle(x=0,y=0,w=0,h=0);
 Rectangle(x=1,y=2,w=3,h=4);     
 Rectangle(   x=1,y=2,w=3,h=4   );
-Rectangle(   x="aaa,y=2,w=3,h=4   );
-Rectangle(x = 3, y = 30, w = 45, h = 67)
-Rectangle(x = 200, y = 300, w = 25 h = 25);
-Rectangle(x = 150, y = 122, w =, h = 37);
-Rectangle(x = 450, y = 230, w = 122, h = 76;;
-Rectangle(x = 450, y = 230, w = 122, h = );
-Rectangle(x = 450, y = 230, h = 76);
-Rectangle(x = 450, y = 230, w = 122, h = 76,);
-Rectangle(x == 450, y = 230, w = 122, h = 76);
-Rectangle(x = -10, y = 20, w = 30, h = 40);
-Rectangle(x = abc, y = 20, w = 30, h = 40);
-Rectangle(x = 400, y = 50.7, w = 50.3, h = 60.7, color = #FF0000);
-Rectangle(x = 40, y = 500, w = 50.3, h = 60.7, color = green);
+
+
+

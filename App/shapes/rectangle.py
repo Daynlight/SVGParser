@@ -55,11 +55,17 @@ class Rectangle(Shape):
             print(f"[yellow]On entry {entry}: Invalid numeric value in {data}[/yellow]")
             return False
 
-
+        color_value = None
         if 'color' in pairs:
-            self._color = ColorParser.parse(pairs['color'])
+            color_value = ColorParser.parse(pairs['color'])
         elif 'c' in pairs:
-            self._color = ColorParser.parse(pairs['c'])
+            color_value = ColorParser.parse(pairs['c'])
+
+        if 'color' in pairs or 'c' in pairs:
+            if color_value is None:
+                print(f"[yellow]On entry {entry}: Invalid color value[/yellow]")
+                return False
+            self._color = color_value
 
         return True
     
