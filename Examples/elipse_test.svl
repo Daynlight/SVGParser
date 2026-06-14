@@ -1,0 +1,3 @@
+Elipse(x = 4, y = 3, rx = 50, ry = 60);
+Elipse(x = 400, y = 120, rx = 200, ry = 250);
+Elipse(x = 200, y = 50, rx = 300, ry = 200);

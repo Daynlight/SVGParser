@@ -123,9 +123,9 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 
 ### Supported Shapes
 - ```Circle(x, y, r);```
-- ```Rect(x, y, w, h);```
-- ```Oval(x, y, a, b);```
-- ```Line(x1, y1, x2, y2, s);```
+- ```Rectangle(x, y, w, h);```
+- ```Elipse(x, y, rx, ry);```
+- ```Line(x1, y1, x2, y2, w);```
 
 
 
@@ -200,12 +200,13 @@ Circle(r=45, x=25, y=30, fill=#5524FF);
 <details open>
 <summary>🌟 Iteration 3 🌟</summary>
 
-- [ ] Add ```Rect Shape``` inherit from **Abstract Shape Class**.
-- [ ] Add ```Rect``` detection and parsing.
-- [ ] Add ```Oval Shape``` inherit from **Abstract Shape Class**.
-- [ ] Add ```Oval``` detection and parsing.
-- [ ] Add ```Line Shape``` inherit from **Abstract Shape Class**.
-- [ ] Add ```Line``` detection and parsing.
+- [x] Add ```Rectangle Shape``` inherit from **Abstract Shape Class** (Martyna).
+- [x] Add ```Rectangle``` detection and parsing (Martyna).
+- [x] Add ```Elipse Shape``` inherit from **Abstract Shape Class** (Martyna).
+- [x] Add ```Elipse``` detection and parsing (Martyna).
+- [x] Add ```Line Shape``` inherit from **Abstract Shape Class** (Martyna).
+- [x] Add ```Line``` detection and parsing (Martyna).
+- [ ] Add color parsing
 - [ ] Examples.
 - [ ] Documentation for Writing files.
 </details>
